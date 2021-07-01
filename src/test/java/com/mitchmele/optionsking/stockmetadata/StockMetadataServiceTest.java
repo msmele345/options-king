@@ -1,6 +1,5 @@
 package com.mitchmele.optionsking.stockmetadata;
 
-import static com.mongodb.client.model.Filters.eq;
 
 import com.mitchmele.optionsking.stockmetadata.config.OptionsLoungeProperties;
 import org.junit.jupiter.api.Test;
@@ -9,9 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
-
 import java.math.BigDecimal;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;

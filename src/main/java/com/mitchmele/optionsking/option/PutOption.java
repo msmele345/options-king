@@ -25,13 +25,11 @@ public class PutOption {
     @ManyToOne
     @JoinColumn(name = "stock_id", nullable = false)
     private Stock stock;
+
     private String month;
 
     @Column(name = "strike_price")
     private double strikePrice;
-
-    @Column(name = "current_price")
-    private double currentPrice;
 
     @Column(name = "expiration_date")
     private Date expirationDate;
