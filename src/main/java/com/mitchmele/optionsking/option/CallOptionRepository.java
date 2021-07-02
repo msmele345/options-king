@@ -9,5 +9,5 @@ public interface CallOptionRepository extends JpaRepository<CallOption, Long> {
 
     List<CallOption> findAllByMonth(String month);
     List<CallOption> findAllByStockId(Long stock_id);
-    Optional<CallOption> findCallOptionByStrikePrice(double strikePrice);
+    List<CallOption> findCallOptionByStrikePrice(double strikePrice);
 }

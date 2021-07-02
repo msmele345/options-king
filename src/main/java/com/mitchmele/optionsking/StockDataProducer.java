@@ -3,7 +3,7 @@ package com.mitchmele.optionsking;
 import com.mitchmele.optionsking.option.CallOptionRepository;
 import com.mitchmele.optionsking.option.PutOptionRepository;
 import com.mitchmele.optionsking.stock.StockRepository;
-import com.mitchmele.optionsking.stockmetadata.StockMetadataService;
+import com.mitchmele.optionsking.stockmetadata.MetadataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +18,7 @@ public class StockDataProducer implements ApplicationRunner {
 
     private final StockRepository stockRepository;
     private final RestTemplate restTemplate;
-    private final StockMetadataService stockMetadataService;
+    private final MetadataService metadataService;
     private final CallOptionRepository callOptionRepository;
     private final PutOptionRepository putOptionRepository;
 

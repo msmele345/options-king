@@ -2,21 +2,17 @@ package com.mitchmele.optionsking.option;
 
 import com.mitchmele.optionsking.stock.Stock;
 import com.mitchmele.optionsking.stock.StockRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-
+import java.util.*;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-class CallOptionRepositoryTest {
+class OptionsRepositoryTest {
 
     @Autowired
     private StockRepository stockRepository;
@@ -29,9 +25,6 @@ class CallOptionRepositoryTest {
 
     @BeforeEach
     void setUp() {
-
-        callOptionRepository.deleteAll();
-        stockRepository.deleteAll();
 
         Date march = new GregorianCalendar(2021, GregorianCalendar.MARCH, 15).getTime();
         Date dec = new GregorianCalendar(2021, GregorianCalendar.DECEMBER, 15).getTime();
@@ -65,7 +58,12 @@ class CallOptionRepositoryTest {
 
         actualMmmStock = stockRepository.save(mmmFinal);
         actualHhhStock = stockRepository.save(hhhFinal);
-        System.out.println("HI");
+    }
+
+    @AfterEach
+    void tearDown() {
+        callOptionRepository.deleteAll();
+        stockRepository.deleteAll();
     }
 
     @Test
@@ -78,7 +76,37 @@ class CallOptionRepositoryTest {
         assertThat(actual.size()).isEqualTo(2);
 
         actual.forEach((CallOption call) -> {
-            assertThat(call.getMonth()).isEqualTo("DEC");
+            assertThat(call.getStock().getSymbol()).isEqualTo("MMM");
         });
+    }
+
+    @Test
+    void findAllByMonth() {
+
+        List<CallOption> actual = callOptionRepository.findAllByMonth("DEC");
+
+        assertThat(actual.size()).isEqualTo(2);
+    }
+
+    @Test
+    void findAllByStrikePrice() {
+
+        List<CallOption> actual = callOptionRepository.findCallOptionByStrikePrice(36.00);
+
+        assertThat(actual.size()).isEqualTo(1);
+        assertThat(actual.get(0).getStrikePrice()).isEqualTo(36.00);
+        assertThat(actual.get(0).getMonth()).isEqualTo("DEC");
+    }
+
+    @Test
+    void stockCalls() {
+
+        Optional<Stock> actual = stockRepository.findBySymbol("MMM");
+
+        assertThat(actual).isPresent();
+    }
+
+    private static HashSet<Option> setOptions(List<Option> options) {
+        return new HashSet<>(options);
     }
 }

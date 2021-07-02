@@ -17,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "CALLS")
-public class CallOption implements Serializable {
+public class CallOption implements Serializable, Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

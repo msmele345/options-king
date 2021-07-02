@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "PUTS")
-public class PutOption {
+public class PutOption implements Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

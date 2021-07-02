@@ -16,7 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class StockMetadataServiceTest {
+class MetadataServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
@@ -25,7 +25,7 @@ class StockMetadataServiceTest {
     private OptionsLoungeProperties properties;
 
     @InjectMocks
-    private StockMetadataService stockMetadataService;
+    private MetadataService metadataService;
 
     @Test
     void getStockDetails_callsInterstellarToGetStockMetaData() {
@@ -53,7 +53,7 @@ class StockMetadataServiceTest {
 
         when(restTemplate.getForObject(anyString(), any(), (Object) any())).thenReturn(expected);
 
-        StockDetailsResponse actual = stockMetadataService.getStockMetadata("ABC");
+        StockDetailsResponse actual = metadataService.getStockMetadata("ABC");
 
         assertThat(actual).isEqualTo(expected);
         verify(properties).getUrl();

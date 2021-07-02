@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class StockMetadataService {
+public class MetadataService {
 
     private final RestTemplate restTemplate;
     private final OptionsLoungeProperties optionsLoungeProperties;
