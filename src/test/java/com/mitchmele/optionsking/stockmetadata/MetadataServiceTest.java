@@ -2,6 +2,7 @@ package com.mitchmele.optionsking.stockmetadata;
 
 
 import com.mitchmele.optionsking.stockmetadata.config.OptionsLoungeProperties;
+import com.mitchmele.optionsking.stockmetadata.helper.UriHelper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,10 +20,10 @@ import static org.mockito.Mockito.when;
 class MetadataServiceTest {
 
     @Mock
-    private RestTemplate restTemplate;
+    private UriHelper uriHelper;
 
     @Mock
-    private OptionsLoungeProperties properties;
+    private RestTemplate restTemplate;
 
     @InjectMocks
     private MetadataService metadataService;
@@ -49,14 +50,14 @@ class MetadataServiceTest {
                 .stockMetadata(expectedMetadata)
                 .build();
 
-        when(properties.getUrl()).thenReturn("www.url.com");
+        when(uriHelper.buildUrl(anyString())).thenReturn("www.url.com?symbol=ABC");
 
         when(restTemplate.getForObject(anyString(), any(), (Object) any())).thenReturn(expected);
 
         StockDetailsResponse actual = metadataService.getStockMetadata("ABC");
 
         assertThat(actual).isEqualTo(expected);
-        verify(properties).getUrl();
-        verify(restTemplate).getForObject("www.url.com", StockDetailsResponse.class);
+        verify(uriHelper).buildUrl("ABC");
+        verify(restTemplate).getForObject("www.url.com?symbol=ABC", StockDetailsResponse.class);
     }
 }

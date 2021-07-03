@@ -1,7 +1,6 @@
 package com.mitchmele.optionsking.stockmetadata;
 
-
-import com.mitchmele.optionsking.stockmetadata.config.OptionsLoungeProperties;
+import com.mitchmele.optionsking.stockmetadata.helper.UriHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -10,10 +9,10 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class MetadataService {
 
+    private final UriHelper uriHelper;
     private final RestTemplate restTemplate;
-    private final OptionsLoungeProperties optionsLoungeProperties;
 
     public StockDetailsResponse getStockMetadata(String symbol) {
-        return restTemplate.getForObject(optionsLoungeProperties.getUrl(), StockDetailsResponse.class);
+        return restTemplate.getForObject(uriHelper.buildUrl(symbol), StockDetailsResponse.class);
     }
 }

@@ -6,10 +6,8 @@ import com.mitchmele.optionsking.stock.Stock;
 import com.mitchmele.optionsking.stock.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
-
 import static java.util.Collections.emptyList;
 
 @Service
