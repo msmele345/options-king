@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.*;
-
 import static java.util.Arrays.asList;
 
 @Component
@@ -33,7 +30,7 @@ public class StockDataProducer implements ApplicationRunner {
     private static final Date DEC = new GregorianCalendar(2021, GregorianCalendar.DECEMBER, 15).getTime();
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         for (String s : symbolsToLoad) {
 
@@ -46,19 +43,21 @@ public class StockDataProducer implements ApplicationRunner {
 
             Stock finalStock = stockRepository.save(stockEntity);
 
-            CallOption call1 = CallOption.builder().stock(stockEntity).month("DEC").strikePrice(price + 1).build();
-            CallOption call2 = CallOption.builder().stock(stockEntity).month("DEC").strikePrice(price + 2).build();
-            CallOption call3 = CallOption.builder().stock(stockEntity).month("DEC").strikePrice(price + 5).build();
-            CallOption call4 = CallOption.builder().stock(stockEntity).month("DEC").strikePrice(price - 2).build();
+            CallOption call1 = CallOption.builder().stock(stockEntity).month("DEC").expirationDate(DEC).strikePrice(Math.floor(price) + 1).build();
+            CallOption call2 = CallOption.builder().stock(stockEntity).month("DEC").expirationDate(DEC).strikePrice(Math.floor(price) + 2).build();
+            CallOption call3 = CallOption.builder().stock(stockEntity).month("DEC").expirationDate(DEC).strikePrice(Math.floor(price) + 5).build();
+            CallOption call4 = CallOption.builder().stock(stockEntity).month("DEC").expirationDate(DEC).strikePrice(Math.floor(price) - 2).build();
+            CallOption call5 = CallOption.builder().stock(stockEntity).month("DEC").expirationDate(DEC).strikePrice(Math.floor(price) - 3).build();
 
-            PutOption put1 = PutOption.builder().stock(stockEntity).month("SEPT").strikePrice(price + 1).build();
-            PutOption put2 = PutOption.builder().stock(stockEntity).month("SEPT").strikePrice(price + 2).build();
-            PutOption put3 = PutOption.builder().stock(stockEntity).month("SEPT").strikePrice(price + 5).build();
-            PutOption put4 = PutOption.builder().stock(stockEntity).month("SEPT").strikePrice(price - 2).build();
+            PutOption put1 = PutOption.builder().stock(stockEntity).month("SEPT").expirationDate(MARCH).strikePrice(Math.floor(price) + 1).build();
+            PutOption put2 = PutOption.builder().stock(stockEntity).month("SEPT").expirationDate(MARCH).strikePrice(Math.floor(price) + 2).build();
+            PutOption put3 = PutOption.builder().stock(stockEntity).month("SEPT").expirationDate(MARCH).strikePrice(Math.floor(price) + 5).build();
+            PutOption put4 = PutOption.builder().stock(stockEntity).month("SEPT").expirationDate(MARCH).strikePrice(Math.floor(price) - 2).build();
+            PutOption put5 = PutOption.builder().stock(stockEntity).month("SEPT").expirationDate(MARCH).strikePrice(Math.floor(price) - 3).build();
 
-            List<CallOption> callList = asList(call1, call2, call3, call4);
+            List<CallOption> callList = asList(call1, call2, call3, call4, call5);
             callOptionRepository.saveAllAndFlush(callList);
-            List<PutOption> putList = asList(put1, put2, put3, put4);
+            List<PutOption> putList = asList(put1, put2, put3, put4, put5);
             putOptionRepository.saveAllAndFlush(putList);
 
             Set<CallOption> calls = new HashSet<>(callList);
@@ -72,17 +71,3 @@ public class StockDataProducer implements ApplicationRunner {
         }
     }
 }
-
-
-/*
-*
-*         Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
-
-        Thread t2 = new Thread(() -> System.out.println("Hi"));
-*
-* */

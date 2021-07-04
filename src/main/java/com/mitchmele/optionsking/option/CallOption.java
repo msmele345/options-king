@@ -1,5 +1,6 @@
 package com.mitchmele.optionsking.option;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mitchmele.optionsking.stock.Stock;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,5 +39,10 @@ public class CallOption implements Serializable, Option {
     @CreationTimestamp
     @Column(name = "CREATED_TS", updatable = false)
     private Date createdAt;
+
+    @JsonBackReference
+    public Stock getStock() {
+        return stock;
+    }
 }
 

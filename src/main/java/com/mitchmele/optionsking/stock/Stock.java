@@ -1,5 +1,6 @@
 package com.mitchmele.optionsking.stock;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mitchmele.optionsking.option.CallOption;
 import com.mitchmele.optionsking.option.PutOption;
 import lombok.*;
@@ -45,6 +46,7 @@ public class Stock implements Serializable {
         this.symbol = symbol;
     }
 
+    @JsonManagedReference
     public Set<CallOption> getCalls() {
         return calls;
     }
